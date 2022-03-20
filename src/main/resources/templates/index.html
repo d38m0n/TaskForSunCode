@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SunCode</title>
+    <style>
+        h1 {
+            margin: auto;
+            text-align: center;
+        }
+
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+
+        select {
+            box-sizing: border-box;
+            background-color: rgba(0, 255, 8, 0.11);
+            appearance: none;
+            border: none;
+            outline: none;
+            border-bottom: solid 3px red;
+            padding: 5px;
+            width: 100%;
+            cursor: pointer;
+            line-height: inherit;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bolder;
+        }
+    </style>
+
+</head>
+<body>
+<h1>SUNCONE API</h1>
+<br>
+<select id="ID" required="" name="source" onchange="loadDoc('/', myFunction,this.value)">
+    <option selected="" disabled="" value="">Wybierz</option>
+    <option type="text" value="1"> Powtarzające się krotki dla Kolumny 1</option>
+    <option type="text" value="2"> Powtarzające się krotki dla Kolumny 2</option>
+    <option type="text" value="3"> Powtarzające się krotki dla Kolumny 3</option>
+    <option type="text" value="4"> Powtarzające się krotki dla Kolumny 4</option>
+    <option type="text" value="11"> Unikalne krotki dla Kolumny 1</option>
+    <option type="text" value="22"> Unikalne krotki dla Kolumny 2</option>
+    <option type="text" value="33"> Unikalne krotki dla Kolumny 3</option>
+    <option type="text" value="44"> Unikalne krotki dla Kolumny 4</option>
+</select>
+
+
+<table>
+    <tbody id="demo">
+    <tr th:each="t:${table}">
+        <td th:text="${t.id}">;</td>
+        <td th:text="${t.kolumna1}"></td>
+        <td th:text="${t.kolumna2}"></td>
+        <td th:text="${t.kolumna3}"></td>
+        <td th:text="${t.kolumna4}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<script>
+    function loadDoc(url, cFunction, value) {
+        let xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                cFunction(this);
+            }
+        };
+        xhttp.open("POST", url, true);
+        let data = new FormData();
+        data.append("source", value);
+        xhttp.send(data);
+    }
+
+    function myFunction(xhttp) {
+        document.getElementById("demo").innerHTML =
+            xhttp.responseText;
+    }
+</script>
+</html>
