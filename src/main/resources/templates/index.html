@@ -45,7 +45,7 @@
 <body>
 <h1>SUNCONE API</h1>
 <br>
-<select id="ID" required="" name="source" onchange="loadDoc('/', myFunction,this.value)">
+<select id="ID" required="" name="source" onchange="updateTable(this.value)">
     <option selected="" disabled="" value="">Wybierz</option>
     <option type="text" value="1"> Powtarzające się krotki dla Kolumny 1</option>
     <option type="text" value="2"> Powtarzające się krotki dla Kolumny 2</option>
@@ -59,7 +59,7 @@
 
 
 <table>
-    <tbody id="demo">
+    <tbody id="table">
     <tr th:each="t:${table}">
         <td th:text="${t.id}">;</td>
         <td th:text="${t.kolumna1}"></td>
@@ -72,7 +72,12 @@
 </body>
 
 <script>
+    function updateTable(number) {
+        loadDoc('/', changeTable, number)
+    }
+
     function loadDoc(url, cFunction, value) {
+
         let xhttp;
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -86,8 +91,8 @@
         xhttp.send(data);
     }
 
-    function myFunction(xhttp) {
-        document.getElementById("demo").innerHTML =
+    function changeTable(xhttp) {
+        document.getElementById("table").innerHTML =
             xhttp.responseText;
     }
 </script>
