@@ -46,7 +46,7 @@
 <h1>SUNCONE API</h1>
 <br>
 <select id="ID" required="" name="source" onchange="updateTable(this.value)">
-    <option selected="" disabled="" value="">Wybierz</option>
+    <option type="text" value="0">Wszystkie</option>
     <option type="text" value="1"> Powtarzające się krotki dla Kolumny 1</option>
     <option type="text" value="2"> Powtarzające się krotki dla Kolumny 2</option>
     <option type="text" value="3"> Powtarzające się krotki dla Kolumny 3</option>
@@ -79,15 +79,17 @@
     function loadDoc(url, cFunction, value) {
 
         let xhttp;
+        let data = new FormData();
+        data.append("source", value);
+
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 cFunction(this);
             }
         };
+
         xhttp.open("POST", url, true);
-        let data = new FormData();
-        data.append("source", value);
         xhttp.send(data);
     }
 
